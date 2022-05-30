@@ -1,5 +1,5 @@
 const Balance = ({ balance }) => {
-  return <>{balance}</>;
+  return <>Current balance: {balance}</>;
 };
 
 export default Balance;

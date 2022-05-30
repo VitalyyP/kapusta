@@ -6,6 +6,23 @@ export const Wrapper = styled.div`
   border-radius: 3px;
   padding: 5px;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
-
 Wrapper.displayName = "TransactionWrapper";
+
+export const TransactionDate = styled.div`
+  flex-grow: 1;
+`;
+TransactionDate.displayName = "TransactionDate";
+
+export const Value = styled.div`
+  flex-grow: 1;
+`;
+Value.displayName = "Value";
+
+export const Comment = styled.div`
+  flex-grow: 1;
+`;
+Comment.displayName = "Comment";

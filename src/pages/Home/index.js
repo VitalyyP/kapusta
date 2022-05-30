@@ -4,7 +4,7 @@ import Transactions from "../../components/Transactions";
 import Form from "../../components/Form";
 import { Wrapper, GlobalStyle } from "./styles";
 import ErrorBoudary from "../../components/ErrorBoudary";
-
+import { getItems, addItem } from "../../utils/indexdb";
 class Home extends Component {
   constructor() {
     super();
@@ -15,22 +15,37 @@ class Home extends Component {
     };
   }
 
-  onChange = (value) => {
-    if (value === "") {
+  componentDidMount() {
+    getItems()
+      .then((transactions) => {
+        this.setState({
+          transactions,
+          balance: transactions.reduce((acc, item) => acc + item.value, 0),
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+
+  onChange = ({ value, date, comment }) => {
+    if (value === "" || comment.trim() === "") {
       return;
     } else {
       value = Number(value);
+
+      const transaction = {
+        value: +value,
+        comment,
+        date,
+        id: Date.now(),
+      };
+
       this.setState((state) => ({
         balance: state.balance + value,
-        transactions: [
-          {
-            value,
-            label: "changed",
-            id: state.transactions.length + 1,
-          },
-          ...state.transactions,
-        ],
+        transactions: [transaction, ...state.transactions],
       }));
+      addItem(transaction);
     }
   };
 
