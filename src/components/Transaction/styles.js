@@ -26,3 +26,12 @@ export const Comment = styled.div`
   flex-grow: 1;
 `;
 Comment.displayName = "Comment";
+
+export const Icon = styled.span`
+  padding: 5px;
+  padding-right: 20px;
+  img {
+    max-width: 18px;
+  }
+`;
+Icon.displayName = "Icon";

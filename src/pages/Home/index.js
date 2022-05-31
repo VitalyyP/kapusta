@@ -1,66 +1,102 @@
-import { Component } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Balance from "../../components/Balance";
 import Transactions from "../../components/Transactions";
 import Form from "../../components/Form";
-import { Wrapper, GlobalStyle } from "./styles";
+import { Wrapper } from "./styles";
 import ErrorBoudary from "../../components/ErrorBoudary";
-import { getItems, addItem } from "../../utils/indexdb";
-class Home extends Component {
-  constructor() {
-    super();
+import { STATUSES } from "../../constants";
+import { useData } from "../../Hooks";
 
-    this.state = {
-      balance: 0,
-      transactions: [],
-    };
-  }
+const Home = () => {
+  const [balance, setBalance] = useState(0);
+  const {
+    transactions,
+    status,
+    pushTransaction,
+    starTransaction,
+    deleteTransaction,
+  } = useData();
 
-  componentDidMount() {
-    getItems()
-      .then((transactions) => {
-        this.setState({
-          transactions,
-          balance: transactions.reduce((acc, item) => acc + item.value, 0),
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
+  useEffect(() => {
+    setBalance(transactions.reduce((acc, item) => acc + item.value, 0));
+  }, [transactions]);
 
-  onChange = ({ value, date, comment }) => {
-    if (value === "" || comment.trim() === "") {
-      return;
-    } else {
-      value = Number(value);
+  console.log("rendering transactions");
+  return (
+    <ErrorBoudary>
+      <Wrapper>
+        <Balance balance={balance} />
+        <Form onChange={pushTransaction} />
+        <hr />
+        {status === STATUSES.PANDING ? <div>Loading...</div> : null}
+        {status === STATUSES.SUCCESS ? (
+          <Transactions
+            transactions={transactions}
+            onDelete={deleteTransaction}
+            onStarClick={starTransaction}
+          />
+        ) : null}
+      </Wrapper>
+    </ErrorBoudary>
+  );
+};
 
-      const transaction = {
-        value: +value,
-        comment,
-        date,
-        id: Date.now(),
-      };
+// class Home extends Component {
+//   constructor() {
+//     super();
 
-      this.setState((state) => ({
-        balance: state.balance + value,
-        transactions: [transaction, ...state.transactions],
-      }));
-      addItem(transaction);
-    }
-  };
+//     this.state = {
+//       balance: 0,
+//       transactions: [],
+//     };
+//   }
 
-  render() {
-    return (
-      <ErrorBoudary>
-        <Wrapper>
-          <Balance balance={this.state.balance} />
-          <Form onChange={this.onChange} />
-          <hr />
-          <Transactions transactions={this.state.transactions} />
-        </Wrapper>
-      </ErrorBoudary>
-    );
-  }
-}
+//   componentDidMount() {
+//     getItems()
+//       .then((transactions) => {
+//         this.setState({
+//           transactions,
+//           balance: transactions.reduce((acc, item) => acc + item.value, 0),
+//         });
+//       })
+//       .catch((e) => {
+//         console.error(e);
+//       });
+//   }
+
+//   onChange = ({ value, date, comment }) => {
+//     if (value === "" || comment.trim() === "") {
+//       return;
+//     } else {
+//       value = Number(value);
+
+//       const transaction = {
+//         value: +value,
+//         comment,
+//         date,
+//         id: Date.now(),
+//       };
+
+//       this.setState((state) => ({
+//         balance: state.balance + value,
+//         transactions: [transaction, ...state.transactions],
+//       }));
+//       addItem(transaction);
+//     }
+//   };
+
+//   render() {
+//     return (
+//       <ErrorBoudary>
+//         <Wrapper>
+//           <Balance balance={this.state.balance} />
+//           <Form onChange={this.onChange} />
+//           <hr />
+//           <Transactions transactions={this.state.transactions} />
+//         </Wrapper>
+//       </ErrorBoudary>
+//     );
+//   }
+// }
 
 export default Home;

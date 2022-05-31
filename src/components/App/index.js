@@ -4,7 +4,9 @@ import Header from "../Header";
 import Home from "../../pages/Home";
 import About from "../../pages/About";
 import Statistics from "../../pages/Statistics";
+import Settings from "../../pages/Settings";
 import { open } from "../../utils/indexdb";
+// import CurrencyContext from "../../providers/context";
 import { Wrapper, GlobalStyle } from "./styles";
 
 class App extends React.Component {
@@ -32,6 +34,7 @@ class App extends React.Component {
     if (this.state.loading) return <div>Loading...</div>;
     return (
       <Router>
+        {/* <CurrencyContext.Provider value={{ currency: "UAH" }}> */}
         <Wrapper>
           <GlobalStyle />
           <Header />
@@ -42,11 +45,15 @@ class App extends React.Component {
             <Route path="/statistics">
               <Statistics />
             </Route>
+            <Route path="/settings">
+              <Settings />
+            </Route>
             <Route path="/">
               <Home />
             </Route>
           </Switch>
         </Wrapper>
+        {/* </CurrencyContext.Provider> */}
       </Router>
     );
   }
