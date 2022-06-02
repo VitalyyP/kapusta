@@ -9,6 +9,11 @@ export const Nav = styled.nav`
       margin-right: 25px;
     }
   }
+  li {
+    a {
+      color: ${({ theme }) => theme.linkColor};
+    }
+  }
 `;
 
 Nav.displayName = "NavWrapper";

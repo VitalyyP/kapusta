@@ -8,7 +8,9 @@ export const GlobalStyle = createGlobalStyle`
 
 export const Wrapper = styled.div`
   padding: 5px;
-  background-color: #eeeeee;
+  background: ${(props) => props.theme.background};
+  color: ${(props) => props.theme.color};
+  /* linkcolor: ${(props) => props.theme.linkColor}; */
 `;
 
 Wrapper.displayName = "AppWrapper";
