@@ -4,5 +4,11 @@ import { LOCALES } from "../constants";
 export default {
   [LOCALES.UKRAINIAN]: {
     hello: "Привіт, Світ!",
+    menu: {
+      home: "Головна",
+      settings: "Налаштування",
+      statistics: "Статистика",
+      about: "Про додаток",
+    },
   },
 };

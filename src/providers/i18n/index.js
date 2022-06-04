@@ -1,2 +1,2 @@
 export { default as IntlAppProvider } from "./provider";
-export { LOCALES } from ".constants;";
+export { LOCALES } from "./constants";

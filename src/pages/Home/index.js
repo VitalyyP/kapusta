@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Balance from "../../components/Balance";
 import Transactions from "../../components/Transactions";
-import Form from "../../components/Form";
+import { ModalForm } from "../../components/ModalForm";
 import { Wrapper } from "./styles";
 import ErrorBoudary from "../../components/ErrorBoudary";
 import { STATUSES } from "../../constants";
@@ -26,7 +26,7 @@ const Home = () => {
     <ErrorBoudary>
       <Wrapper>
         <Balance balance={balance} />
-        <Form onChange={pushTransaction} />
+        <ModalForm onChange={pushTransaction} />
         <hr />
         {status === STATUSES.PANDING ? <div>Loading...</div> : null}
         {status === STATUSES.SUCCESS ? (

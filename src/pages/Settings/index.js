@@ -1,7 +1,8 @@
 import { useContext, memo, useCallback, useState } from "react";
-
+import { LOCALES } from "../../providers/i18n";
 import { AppContext } from "../../providers/context";
 import { useBooleanToggle } from "../../Hooks";
+import { saveToStorage } from "../../utils/sessionStorage";
 
 const Test = memo(({ onClick }) => {
   console.log("rendering");
@@ -24,20 +25,49 @@ const Settings = () => {
   const onClick = useCallback(() => {
     console.log("Parent's click");
   }, []);
+
+  const onChangeLocale = (e) => {
+    const { value } = e.target;
+    dispatch({
+      type: "setLocale",
+      locale: value,
+    });
+    saveToStorage("locale", value);
+  };
+
   return (
     <>
       <h1>Setting</h1>
       <Test onClick={onClick} />
       <div>
         <form>
-          <label>
-            Currency:
-            <select name="currency" value={state.currency} onChange={onChange}>
-              <option value="UAH">Гривня</option>
-              <option value="USD">Dollar</option>
-              <option value="EUR">Euro</option>
-            </select>
-          </label>
+          <div>
+            <label>
+              Currency:
+              <select
+                name="currency"
+                value={state.currency}
+                onChange={onChange}
+              >
+                <option value="UAH">Гривня</option>
+                <option value="USD">Dollar</option>
+                <option value="EUR">Euro</option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label>
+              Lolale:
+              <select
+                name="locale"
+                value={state.locale}
+                onChange={onChangeLocale}
+              >
+                <option value={LOCALES.UKRAINIAN}>Українська</option>
+                <option value={LOCALES.ENGLISH}>English</option>
+              </select>
+            </label>
+          </div>
         </form>
       </div>
       <div>
