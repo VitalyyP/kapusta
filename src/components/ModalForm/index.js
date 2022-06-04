@@ -1,14 +1,19 @@
 import { useState } from "react";
 import Modal from "../Modal";
 import Form from "../Form";
+import { Button } from "./styles";
 
-export const ModalForm = (pushTransaction) => {
+export const ModalForm = (props) => {
   const [openModal, setOpenModal] = useState(false);
+
   return (
     <>
-      <button onClick={() => setOpenModal(true)}>+</button>
+      <Button onClick={() => setOpenModal(true)}>+</Button>
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <Form onChange={() => pushTransaction} />
+        <Form
+          onChange={props.onChange}
+          onCloseModalForm={() => setOpenModal(false)}
+        />
       </Modal>
     </>
   );

@@ -22,6 +22,7 @@ const Home = () => {
   }, [transactions]);
 
   console.log("rendering transactions");
+  console.log("push transactions: ", pushTransaction);
   return (
     <ErrorBoudary>
       <Wrapper>

@@ -12,18 +12,17 @@ const Form = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // debugger;
     props.onChange(form);
     setForm({
       ...form,
       value: "",
       comment: "",
     });
+    props.onCloseModalForm();
   };
 
   const onChange = (e) => {
     const { value, name } = e.target;
-    // debugger;
     setForm({
       ...form,
       [name]: value,
